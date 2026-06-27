@@ -32,3 +32,13 @@ Na aba movimentação, o admin poderá ver uma listagem com as movimentações, 
 
 
 A ideia é que além de ser uma gestão de estoque, que seja como uma especie de catálogo para os usuários comuns poderem olhar os produtos
+
+## Sobre os apps
+
+- catalogo: Clube, Produto, ProdutoMedia, ProdutoTamanho
+
+- dashboard: 
+
+- inventario: Movimentacao
+
+- users: User, Login, Logout
