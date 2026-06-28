@@ -4,5 +4,8 @@ from django.http import HttpResponse
 # Create your views here.
 
 
-def inventario(request):
-    return HttpResponse('Inventario')
+def movimentacoes(request):
+    return render(request, 'inventario/movimentacoes.html')
+
+def nova_movimentacao(request):
+    return render(request, 'inventario/nova_movimentacao.html')
