@@ -19,6 +19,10 @@ class Temporada(models.Model):
         )
     )
 
+    class Meta:
+        verbose_name = 'Temporada'
+        verbose_name_plural = 'Temporadas'
+
     @property
     def nome(self):
         if self.tipo == 'N' or not self.ano_fim:
@@ -29,6 +33,7 @@ class Temporada(models.Model):
     def __str__(self):
         return self.nome
     
+
 
 class Clube(models.Model):
     nome = models.CharField(
@@ -44,6 +49,10 @@ class Clube(models.Model):
 
     atualizado_em = models.DateTimeField(auto_now=True)
 
+
+    class Meta:
+        verbose_name = 'Clube'
+        verbose_name_plural = 'Clubes'
 
     def __str__(self):
         return self.nome
@@ -91,10 +100,25 @@ class Camisa(models.Model):
     
     atualizado_em = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name = 'Camisa'
+        verbose_name_plural = 'Camisas'
+
     def __str__(self):
         return f"{self.clube} - {self.nome} ({self.temporada})"
 
         #Exemplo: Barcelona - Home (2026/2027)
+
+    @property
+    def estoque_total(self):
+        return sum(
+            tamanho.estoque
+            for tamanho in self.tamanhos.all()
+        )
+    
+    @property
+    def esgotada(self):
+        return self.estoque_total == 0
 
 
 class CamisaTamanho(models.Model):
@@ -116,6 +140,11 @@ class CamisaTamanho(models.Model):
     oculto = models.BooleanField(default=False)
 
     class Meta:
+
+        verbose_name = 'Camisa Tamanho'
+
+        verbose_name_plural = 'Camisas Tamanho'
+
         constraints = [
             models.UniqueConstraint(
                 fields=["camisa", "tamanho"],
@@ -145,5 +174,12 @@ class CamisaMedia(models.Model):
     arquivo = models.FileField(upload_to='camisas/')
 
     class Meta:
+
+        verbose_name = 'Camisa Media'
+        verbose_name_plural = 'Camisas Media'
+
         ordering = ["ordem"]
+
+    def __str__(self):
+        return f'Midia {self.ordem} - {self.camisa.clube} {self.camisa.nome} ({self.camisa.temporada})'
 
